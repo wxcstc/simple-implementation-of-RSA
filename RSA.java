@@ -1,4 +1,4 @@
-package RSA;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,44 +11,44 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RSA {
-	//Ë½Ô¿,p,qÎªÁ½¸ö´óËØÊı,rm mod fpq=1ÇÒgcd(r,fpq)=1
+	//ç§é’¥,p,qä¸ºä¸¤ä¸ªå¤§ç´ æ•°,rm mod fpq=1ä¸”gcd(r,fpq)=1
 	private BigInteger p,q,m;
-	//¹«Ô¿
+	//å…¬é’¥
 	public BigInteger r,n;
-	//¸Ã±äÁ¿Îª£¨p-1)*(q-1)
+	//è¯¥å˜é‡ä¸ºï¼ˆp-1)*(q-1)
 	private BigInteger fpq;
 	
 	BigInteger two=BigInteger.ONE.add(BigInteger.ONE);
 	
 	public RSA(int bitLength,int time)throws IOException{
-		System.out.println("ÊäÈë1Ñ¡ÔñÏÖÓĞÃÜÔ¿½øĞĞ¼ÓÃÜ\nÊäÈë2ÏÖÔÚÉú³ÉÃÜÔ¿½øĞĞ¼ÓÃÜ");
+		System.out.println("è¾“å…¥1é€‰æ‹©ç°æœ‰å¯†é’¥è¿›è¡ŒåŠ å¯†\nè¾“å…¥2ç°åœ¨ç”Ÿæˆå¯†é’¥è¿›è¡ŒåŠ å¯†");
 		Scanner cin=new Scanner(System.in);
 		int choice=cin.nextInt();
 		String pub,pri;
 		cin.nextLine();
 		if(choice==1){
-			System.out.println("ÊäÈë¹«Ô¿ËùÔÚÎÄ¼ş:");
+			System.out.println("è¾“å…¥å…¬é’¥æ‰€åœ¨æ–‡ä»¶:");
 			pub=cin.nextLine();
-			System.out.println("ÊäÈëË½Ô¿ËùÔÚÎÄ¼ş:");
+			System.out.println("è¾“å…¥ç§é’¥æ‰€åœ¨æ–‡ä»¶:");
 			pri=cin.nextLine();
 			getKey(pub,pri);
 		}else{
-			System.out.println("ÕıÔÚÉú³É¹«Ë½Ô¿...");
+			System.out.println("æ­£åœ¨ç”Ÿæˆå…¬ç§é’¥...");
 			generate_key(bitLength,time);
-			System.out.println("Éú³É³É¹¦£¡");
-			System.out.println("ÊäÈë¹«Ô¿±£´æÎ»ÖÃ:");
+			System.out.println("ç”ŸæˆæˆåŠŸï¼");
+			System.out.println("è¾“å…¥å…¬é’¥ä¿å­˜ä½ç½®:");
 			pub=cin.nextLine();
-			System.out.println("ÊäÈëË½Ô¿±£´æÎ»ÖÃ:");
+			System.out.println("è¾“å…¥ç§é’¥ä¿å­˜ä½ç½®:");
 			pri=cin.nextLine();
 			outputToFile(pub,pri);
 		}
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ£ºÉú³É¹«Ë½Ô¿
-	 * ÊäÈë²ÎÊı£ºÃÜÔ¿µÄ¶ş½øÖÆ³¤¶È,¼ìÑéÒ»¸öÊıÊÇ·ñÊÇËØÊıµÄ´ÎÊı
-	 * Êä³ö²ÎÊı£ºÎŞ
-	 * ĞŞ¸ÄµÄ±äÁ¿:p,q,n,fpq,r,m
+	 * å‡½æ•°åŠŸèƒ½ï¼šç”Ÿæˆå…¬ç§é’¥
+	 * è¾“å…¥å‚æ•°ï¼šå¯†é’¥çš„äºŒè¿›åˆ¶é•¿åº¦,æ£€éªŒä¸€ä¸ªæ•°æ˜¯å¦æ˜¯ç´ æ•°çš„æ¬¡æ•°
+	 * è¾“å‡ºå‚æ•°ï¼šæ— 
+	 * ä¿®æ”¹çš„å˜é‡:p,q,n,fpq,r,m
 	 */
 	public void generate_key(int bitLength,int time) throws IOException{
 		p=generatePrime(bitLength,time);
@@ -65,9 +65,9 @@ public class RSA {
 		m=inverse(r,fpq);
 	}
 	/*
-	 * º¯Êı¹¦ÄÜ:´ÓÎÄ¼şÖĞ¶ÁÈ¡¹«Ë½Ô¿
-	 * ÊäÈë²ÎÊı:´æ·Å¹«Ë½Ô¿µÄÎÄ¼şÃû
-	 * Êä³ö²ÎÊı:ÎŞ
+	 * å‡½æ•°åŠŸèƒ½:ä»æ–‡ä»¶ä¸­è¯»å–å…¬ç§é’¥
+	 * è¾“å…¥å‚æ•°:å­˜æ”¾å…¬ç§é’¥çš„æ–‡ä»¶å
+	 * è¾“å‡ºå‚æ•°:æ— 
 	 */
 	public void getKey(String public_key,String private_key) throws IOException{
 		BufferedReader br_public=new BufferedReader(new FileReader(new File(public_key)));
@@ -83,9 +83,9 @@ public class RSA {
 		setPrivateKey(p,q,m);
 	}
 	/*
-	 *º¯Êı¹¦ÄÜ:½«¹«Ô¿ºÍË½Ô¿·Ö±ğ±£´æµ½Á½¸öÎÄ¼şÖĞÈ¥
-	 *ÊäÈë²ÎÊı:Á½¸öÎÄ¼şµÄÎÄ¼şÃû
-	 *Êä³ö²ÎÊı:ÎŞ 
+	 *å‡½æ•°åŠŸèƒ½:å°†å…¬é’¥å’Œç§é’¥åˆ†åˆ«ä¿å­˜åˆ°ä¸¤ä¸ªæ–‡ä»¶ä¸­å»
+	 *è¾“å…¥å‚æ•°:ä¸¤ä¸ªæ–‡ä»¶çš„æ–‡ä»¶å
+	 *è¾“å‡ºå‚æ•°:æ—  
 	 */
 	public void outputToFile(String public_key,String private_key) throws IOException{
 		BufferedWriter bw_public=new BufferedWriter(new FileWriter(new File(public_key),true));
@@ -99,9 +99,9 @@ public class RSA {
 		bw_private.close();
 	}
 	/*
-	 * º¯Êı¹¦ÄÜ£º²úÉú´óËØÊı
-	 * ÊäÈë²ÎÊı£ºËØÊıµÄ¶ş½øÖÆ³¤¶È,¼ìÑéÒ»¸öÊıÊÇ·ñÊÇËØÊıµÄ´ÎÊı
-	 * Êä³ö²ÎÊı£º²úÉúµÄ´óËØÊı
+	 * å‡½æ•°åŠŸèƒ½ï¼šäº§ç”Ÿå¤§ç´ æ•°
+	 * è¾“å…¥å‚æ•°ï¼šç´ æ•°çš„äºŒè¿›åˆ¶é•¿åº¦,æ£€éªŒä¸€ä¸ªæ•°æ˜¯å¦æ˜¯ç´ æ•°çš„æ¬¡æ•°
+	 * è¾“å‡ºå‚æ•°ï¼šäº§ç”Ÿçš„å¤§ç´ æ•°
 	 */
 	public BigInteger generatePrime(int bitLength,int time){
 		BigInteger p=bigRandom(bitLength);
@@ -112,9 +112,9 @@ public class RSA {
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ£º²úÉúÒ»¸ö´óËæ»úÊı
-	 * ÊäÈë²ÎÊı£ºËæ»úÊıµÄ¶ş½øÖÆÎ»Êı
-	 * Êä³ö²ÎÊı£º²úÉúµÄ´óËæ»úÊı
+	 * å‡½æ•°åŠŸèƒ½ï¼šäº§ç”Ÿä¸€ä¸ªå¤§éšæœºæ•°
+	 * è¾“å…¥å‚æ•°ï¼šéšæœºæ•°çš„äºŒè¿›åˆ¶ä½æ•°
+	 * è¾“å‡ºå‚æ•°ï¼šäº§ç”Ÿçš„å¤§éšæœºæ•°
 	 */
 	public BigInteger bigRandom(int bitLength){
 		String s="";
@@ -134,9 +134,9 @@ public class RSA {
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ£ºÊ¹ÓÃMiller-RabinËã·¨ÅĞ¶ÏÒ»¸öÊıÊÇ·ñÊÇËØÊı
-	 * ÊäÈë²ÎÊı£º´ıÅĞ¶ÏµÄÊı
-	 * Êä³ö²ÎÊı£ºÊÇËØÊı·µ»Ø1£¬²»ÊÇ·µ»Ø0
+	 * å‡½æ•°åŠŸèƒ½ï¼šä½¿ç”¨Miller-Rabinç®—æ³•åˆ¤æ–­ä¸€ä¸ªæ•°æ˜¯å¦æ˜¯ç´ æ•°
+	 * è¾“å…¥å‚æ•°ï¼šå¾…åˆ¤æ–­çš„æ•°
+	 * è¾“å‡ºå‚æ•°ï¼šæ˜¯ç´ æ•°è¿”å›1ï¼Œä¸æ˜¯è¿”å›0
 	 */
 	public boolean isPrime(BigInteger num,int time){
 		int count=0;
@@ -180,9 +180,9 @@ public class RSA {
 	
 	
 	/*
-	 * º¯Êı¹¦ÄÜ£ºÊµÏÖÄ£ÖØ¸´Æ½·½Ëã·¨,ÃİÖ¸Êı×î´ó¿ÉÎª10240Î»Êı¾İ
-	 * ÊäÈë²ÎÊı£ºµ×Êıa,ÃİÖ¸ÊıbºÍÄ£Êın
-	 * Êä³ö²ÎÊı£ºa^bmod n
+	 * å‡½æ•°åŠŸèƒ½ï¼šå®ç°æ¨¡é‡å¤å¹³æ–¹ç®—æ³•,å¹‚æŒ‡æ•°æœ€å¤§å¯ä¸º10240ä½æ•°æ®
+	 * è¾“å…¥å‚æ•°ï¼šåº•æ•°a,å¹‚æŒ‡æ•°bå’Œæ¨¡æ•°n
+	 * è¾“å‡ºå‚æ•°ï¼ša^bmod n
 	 */
 	public BigInteger quickMod(BigInteger a,BigInteger b,BigInteger n){
 		BigInteger tmp=b;
@@ -199,9 +199,9 @@ public class RSA {
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ:ÇóÒ»¸öÊıµÄÄæÔª
-	 * ÊäÈë²ÎÊı:b,a(ĞèÒªÇób^-1moda)
-	 * Êä³ö²ÎÊı:ÇóµÃµÄÄæÔª£¬Èç²»´æÔÚÄæÔª·µ»Ø0
+	 * å‡½æ•°åŠŸèƒ½:æ±‚ä¸€ä¸ªæ•°çš„é€†å…ƒ
+	 * è¾“å…¥å‚æ•°:b,a(éœ€è¦æ±‚b^-1moda)
+	 * è¾“å‡ºå‚æ•°:æ±‚å¾—çš„é€†å…ƒï¼Œå¦‚ä¸å­˜åœ¨é€†å…ƒè¿”å›0
 	 */
 	public BigInteger inverse(BigInteger b,BigInteger a){
 		BigInteger a0,b0,t0,t,q,r;
@@ -224,27 +224,27 @@ public class RSA {
 		else return t;
 	}
 	/*
-	 * º¯Êı¹¦ÄÜ£º¶ÔÊı¾İ½øĞĞ¼ÓÃÜ
-	 * ÊäÈë²ÎÊı£º´ı¼ÓÃÜÊı¾İ
-	 * Êä³ö²ÎÊı£º¼ÓÃÜ½á¹û
+	 * å‡½æ•°åŠŸèƒ½ï¼šå¯¹æ•°æ®è¿›è¡ŒåŠ å¯†
+	 * è¾“å…¥å‚æ•°ï¼šå¾…åŠ å¯†æ•°æ®
+	 * è¾“å‡ºå‚æ•°ï¼šåŠ å¯†ç»“æœ
 	 */
 	public BigInteger encrypt(BigInteger data){
 		return quickMod(data,r,n);
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ£º¶ÔÊı¾İ½øĞĞ½âÃÜ
-	 * ÊäÈë²ÎÊı£ºÃÜÎÄ
-	 * Êä³ö²ÎÊı£ºÃ÷ÎÄ
+	 * å‡½æ•°åŠŸèƒ½ï¼šå¯¹æ•°æ®è¿›è¡Œè§£å¯†
+	 * è¾“å…¥å‚æ•°ï¼šå¯†æ–‡
+	 * è¾“å‡ºå‚æ•°ï¼šæ˜æ–‡
 	 */
 	public BigInteger decrypt(BigInteger data){
 		return quickMod(data,m,n);
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ£ºÉèÖÃË½Ô¿
-	 * ÊäÈë²ÎÊı£ºÁ½¸ö´óÖ¸Êıp,qºÍ½âÃÜÖ¸Êım
-	 * Êä³ö²ÎÊı£ºÎŞ
+	 * å‡½æ•°åŠŸèƒ½ï¼šè®¾ç½®ç§é’¥
+	 * è¾“å…¥å‚æ•°ï¼šä¸¤ä¸ªå¤§æŒ‡æ•°p,qå’Œè§£å¯†æŒ‡æ•°m
+	 * è¾“å‡ºå‚æ•°ï¼šæ— 
 	 */
 	private void setPrivateKey(BigInteger _p,BigInteger _q,BigInteger _m){
 		p=_p;
@@ -252,9 +252,9 @@ public class RSA {
 		m=_m;
 	}
 	/*
-	 * º¯Êı¹¦ÄÜ£ºÉèÖÃ¹«Ô¿
-	 * ÊäÈë²ÎÊı£ºnºÍ¼ÓÃÜÖ¸Êır
-	 * Êä³ö²ÎÊı£ºÎŞ
+	 * å‡½æ•°åŠŸèƒ½ï¼šè®¾ç½®å…¬é’¥
+	 * è¾“å…¥å‚æ•°ï¼šnå’ŒåŠ å¯†æŒ‡æ•°r
+	 * è¾“å‡ºå‚æ•°ï¼šæ— 
 	 */
 	private void setPublicKey(BigInteger _n,BigInteger _r){
 		n=_n;
