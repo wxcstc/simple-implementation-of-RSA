@@ -1,4 +1,4 @@
-package test1;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,13 +15,13 @@ public class courseDesign {
 	public static void main(String[] args) throws IOException {
 		RSA rsa=new RSA(512,10);
 		Scanner cin=new Scanner(System.in);
-		System.out.println("ÊäÈëĞèÒª¼ÓÃÜµÄÎÄ¼şÂ·¾¶:");
+		System.out.println("è¾“å…¥éœ€è¦åŠ å¯†çš„æ–‡ä»¶è·¯å¾„:");
 		String s=cin.next();
-		System.out.println("ÊäÈë¼ÓÃÜ½á¹û´æ·ÅµÄÎÄ¼şµÄÂ·¾¶:");
+		System.out.println("è¾“å…¥åŠ å¯†ç»“æœå­˜æ”¾çš„æ–‡ä»¶çš„è·¯å¾„:");
 		String ss=cin.next();
 		FileInputStream fis=new FileInputStream(new File(s));
 		FileOutputStream fos=new FileOutputStream(new File(ss));
-		System.out.println("¼ÓÃÜÖĞ...");
+		System.out.println("åŠ å¯†ä¸­...");
 		byte[]tmp=new byte[32];
 		int num;
 		BigInteger data;
@@ -38,15 +38,15 @@ public class courseDesign {
 			fos.write(13);
 			fos.write(10);
 		}
-		System.out.println("¼ÓÃÜÍê³É!");
+		System.out.println("åŠ å¯†å®Œæˆ!");
 		fos.close();
 		fis.close();
 		
-		System.out.println("ÊäÈë½âÃÜµÄÎÄ¼şÂ·¾¶:");
+		System.out.println("è¾“å…¥è§£å¯†çš„æ–‡ä»¶è·¯å¾„:");
 		String p=cin.next();
-		System.out.println("ÊäÈë½âÃÜ½á¹û´æ·ÅµÄÎÄ¼şÂ·¾¶:");
+		System.out.println("è¾“å…¥è§£å¯†ç»“æœå­˜æ”¾çš„æ–‡ä»¶è·¯å¾„:");
 		String pp=cin.next();
-		System.out.println("½âÃÜÖĞ...");
+		System.out.println("è§£å¯†ä¸­...");
 		FileOutputStream fts=new FileOutputStream(new File(pp));
 		
 		BufferedReader br=new BufferedReader(new FileReader(new File(p)));
@@ -55,16 +55,16 @@ public class courseDesign {
 			data=new BigInteger(buf);
 			deal(rsa.decrypt(data),fts);
 		}
-		System.out.println("½âÃÜÍê³É!");
+		System.out.println("è§£å¯†å®Œæˆ!");
 		br.close();
 		fts.close();
 		
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ:¶ÔÎÄ¼ş½âÃÜºó£¬¶ÔµÃµ½µÄÊı¾İ½øĞĞ´¦Àí£¬Êä³öµ½ÎÄ¼şÖĞ
-	 * ÊäÈë²ÎÊı:´óÕûÊıs,ÎÄ¼şÊä³öÁ÷fos
-	 * Êä³ö²ÎÊı:ÎŞ
+	 * å‡½æ•°åŠŸèƒ½:å¯¹æ–‡ä»¶è§£å¯†åï¼Œå¯¹å¾—åˆ°çš„æ•°æ®è¿›è¡Œå¤„ç†ï¼Œè¾“å‡ºåˆ°æ–‡ä»¶ä¸­
+	 * è¾“å…¥å‚æ•°:å¤§æ•´æ•°s,æ–‡ä»¶è¾“å‡ºæµfos
+	 * è¾“å‡ºå‚æ•°:æ— 
 	 */
 	public static void deal(BigInteger s,FileOutputStream fos) throws IOException{
 		BigInteger two=BigInteger.ONE.add(BigInteger.ONE);
@@ -94,9 +94,9 @@ public class courseDesign {
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ:½«¶ş½øÖÆ×ªÎªÊ®½øÖÆ
-	 * ÊäÈë²ÎÊı:¶ş½øÖÆµÄ×Ö·û´®ĞÎÊ½
-	 * Êä³ö²ÎÊı:¶ÔÓ¦µÄÊ®½øÖÆÊı
+	 * å‡½æ•°åŠŸèƒ½:å°†äºŒè¿›åˆ¶è½¬ä¸ºåè¿›åˆ¶
+	 * è¾“å…¥å‚æ•°:äºŒè¿›åˆ¶çš„å­—ç¬¦ä¸²å½¢å¼
+	 * è¾“å‡ºå‚æ•°:å¯¹åº”çš„åè¿›åˆ¶æ•°
 	 */
 	public static BigInteger BinaryToDecimal(String str){
 		BigInteger two=BigInteger.ONE.add(BigInteger.ONE);
@@ -106,14 +106,14 @@ public class courseDesign {
 			if(str.charAt(i)=='1')result=result.add(factor);
 			factor=factor.multiply(two);
 		}
-		//System.out.println("¼ÓÃÜÇ°µÄ½á¹û:"+result);
+		//System.out.println("åŠ å¯†å‰çš„ç»“æœ:"+result);
 		return result;
 	}
 	
 	/*
-	 * º¯Êı¹¦ÄÜ:½«byteÓÃ¶ş½øÖÆĞÎÊ½±íÊ¾
-	 * ÊäÈë²ÎÊı:byteÊı×éºÍÒª×ª»¯µÄbyteµÄ¸öÊı
-	 * Êä³ö²ÎÊı:byteµÄ¶ş½øÖÆĞÎÊ½
+	 * å‡½æ•°åŠŸèƒ½:å°†byteç”¨äºŒè¿›åˆ¶å½¢å¼è¡¨ç¤º
+	 * è¾“å…¥å‚æ•°:byteæ•°ç»„å’Œè¦è½¬åŒ–çš„byteçš„ä¸ªæ•°
+	 * è¾“å‡ºå‚æ•°:byteçš„äºŒè¿›åˆ¶å½¢å¼
 	 */
 	public static String ByteToBinary(byte[]b,int len){
 		String str="";
